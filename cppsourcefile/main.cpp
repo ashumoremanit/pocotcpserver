@@ -71,9 +71,9 @@ public:
 
 
 int main(int argc, char** argv)
-{   //Setting Server IP address
-
-	Poco::UInt32 ip = inet_addr("127.0.0.1");
+{       //Setting Server IP address 
+	//For Windows OS IPAddress("127.0.0.1") might not work hence use of inet_addr is mandatory
+        Poco::UInt32 ip = inet_addr("127.0.0.1");
 	Poco::Net::IPAddress ip1(&ip, sizeof(ip));
 	Poco::Net::SocketAddress ss(ip1, 21);
 	Poco::Net::ServerSocket s (ss,20);
