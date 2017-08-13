@@ -29,15 +29,23 @@ public:
 // Run() method inherited from the runnable class which is a entry point for each thread.
 	void run() 
 	{
-		cout << "New connection from: " << socket().peerAddress().host().toString() << endl << flush;
+		cout << "New client connected " << socket().peerAddress().host().toString() << endl << flush;
 		bool active = true;
-		Poco::Timespan timeOut(100, 0);
+		socket().setKeepAlive(true);
+		Poco::Timespan timeOut(10, 0);
 		unsigned char Buffer[1000];
 		while (active) {
-			if (socket().poll(timeOut, Poco::Net::Socket::SELECT_READ) == false) {
-				cout << "No string Recieved till Timeout span . Client Active status :"<< active  << flush;
+		        if(!socket().getKeepAlive())
+			{
+			cout<<"Client connection status : closed "<<endl;
+			break;
 			}
-			else {
+			elseif (socket().poll(timeOut, Poco::Net::Socket::SELECT_READ) == false) 
+			{
+				cout << " No Data Recieved till Timeout span . Client connection status : Active "<< flush <<endl;
+			}
+			else 
+			{
 				cout << " Client Message : "<< flush;
 				int recBytes = -1;
 
@@ -62,6 +70,7 @@ public:
 			}
 		}
 		cout << "Connection finished!" << endl << flush;
+		cout<< " "<<endl;
 	}
 };
 	
