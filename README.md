@@ -15,6 +15,8 @@ thread connections parameters using TcpServerParams class while declaring the TC
 constructors .Once the start method is for defined TCPServer object runs ,it starts the 
 TCPServer,and  creates the separate thread for listening incoming connections .
 
+The Server Also keeps track of the TCPKeepAlive Status .Once the client closes the connection .It informs about the connection closed status , then exit the run method thereby terminating the connection.
+
 
 
 
